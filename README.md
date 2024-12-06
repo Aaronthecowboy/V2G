@@ -31,7 +31,7 @@ V2G 是一个基于 ChatGPT 和 FishAudioTTS 的语音对话程序，支持语�
 
 ### 2. 克隆代码仓库
 ```bash
-git clone https://github.com/yourusername/V2G.git
+git clone https://github.com/Aaronthecowboy/V2G.git
 cd V2G
 ```
 
