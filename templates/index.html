@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C2G 1.0.1</title>
+<title>V2C</title>
 <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #e9eff1; }
     .chat-container { display: flex; flex-direction: column; height: 100vh; margin: auto; max-width: 600px; background-color: #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
@@ -95,6 +95,16 @@
     width: 48px; /* 使得 spacer 和 .menu-btn 有相同的宽度 */
     /* 如果.menu-btn是通过内边距等得到宽度，可能需要相应调整此值 */
 }
+
+#muteButton {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    margin-right: 5px;
+}
+
 </style>
 </head>
 <body>
@@ -102,8 +112,9 @@
     <div class="chat-header">
         <!-- 注意，此处的 onclick 须在相应的 JS 中定义函数 toggleMenu -->
         <span class="menu-btn" onclick="toggleMenu()">&#9776;</span>
-        <span class="title">C2G 1.0.2</span>
+        <span class="title">V2C 1.0.3</span>
         <span class="spacer"></span>
+        <button id="muteButton" onclick="toggleMute()">🔊</button>
     </div>
     <div id="chat-messages" class="chat-messages">
         <!-- Chat messages will be displayed here -->
@@ -140,23 +151,24 @@ var canvas, canvasContext;
 var mediaRecorder;
 var audioChunks = [];
 
-// 播放音频队列中的下一个音频文件
-function playNextAudio() {
-    if (audioQueue.length > 0 && !isAudioPlaying) {
-        var audioUrl = audioQueue.shift(); // 获取并移除队列的第一个音频文件url
-        var audio = new Audio(audioUrl);
-        isAudioPlaying = true; // 标记音频正在播放
-        audio.play();
-        audio.onended = function() {
-            isAudioPlaying = false; // 更新标志位
-            playNextAudio(); // 尝试播放下一个音频
-        };
-    }
+var isMuted = false;
+
+function toggleMute() {
+    isMuted = !isMuted;
+    document.getElementById("muteButton").textContent = isMuted ? "🔇" : "🔊";
+
+    // 静音或取消静音所有音频元素
+    var audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(function(audio) {
+        audio.muted = isMuted;
+    });
 }
 
+// 播放音频队列中的下一个音频文件
 eventSource.onmessage = function(event) {
     var data = JSON.parse(event.data);
     var messageText = data.message;
+
     if (!currentMessageParagraph) {
         currentMessageParagraph = document.createElement("p");
         currentMessageParagraph.classList.add('gpt-msg');
@@ -168,13 +180,27 @@ eventSource.onmessage = function(event) {
 
     if (data.audio_filename && !playedAudioFiles.has(data.audio_filename)) {
         playedAudioFiles.add(data.audio_filename); // 将文件标记为已播放
-        audioQueue.push("/audio/" + data.audio_filename); // 将新的音频文件url添加到队列
+        audioQueue.push("/audio/" + data.audio_filename); // 注意这里的路径
 
         if (!isAudioPlaying) {
             playNextAudio();  // 如果没有音频正在播放，立即播放下一个音频
         }
     }
 };
+
+function playNextAudio() {
+    if (audioQueue.length > 0 && !isAudioPlaying) {
+        var audioUrl = audioQueue.shift(); // 获取并移除队列的第一个音频文件url
+        var audio = new Audio(audioUrl);
+        audio.muted = isMuted; // 根据静音状态设置
+        isAudioPlaying = true; // 标记音频正在播放
+        audio.play();
+        audio.onended = function() {
+            isAudioPlaying = false; // 更新标志位
+            playNextAudio(); // 尝试播放下一个音频
+        };
+    }
+}
 
 function resetCurrentMessage() {
     currentMessageParagraph = null;
@@ -358,13 +384,6 @@ function handleTranscript(transcript) {
     }
 }
 
-
-function showVoicePrint() {
-    if (!audioContext) {
-        initializeVoicePrint();
-    }
-    canvas.style.display = 'block';
-}
 
 function showVoicePrint() {
     if (!audioContext) {
