@@ -61,19 +61,7 @@ FISH_API_KEY=your_fish_audio_tts_key
 python app.py
 ```
 
-### 6. 启动前端
-进入前端目录并安装依赖：
-```bash
-cd frontend
-npm install
-```
-
-运行前端服务：
-```bash
-npm start
-```
-
-### 7. 访问应用
+### 6. 访问应用
 在浏览器中打开 [http://localhost:3000](http://localhost:3000) 即可访问 V2G。
 
 ---
