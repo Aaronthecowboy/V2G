@@ -1,4 +1,10 @@
-Flask==3.0.0
-openai==1.6.0
-Werkzeug==3.0.1
-flask_cors==4.0.0
+collections
+json
+flask_cors
+glob
+werkzeug
+openai
+requests
+time
+os
+Flask
