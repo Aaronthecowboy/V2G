@@ -205,8 +205,7 @@ def audio(filename):
     else:
         mimetype = 'application/octet-stream'  # 默认 MIME 类型
 
-    # 确保这里有额外的安全层，例如身份验证
-    # 您还需要在文件被客户端获取后清理这些文件
+
     return send_file(filename, mimetype=mimetype)
 
 
