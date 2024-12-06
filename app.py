@@ -11,11 +11,11 @@ import requests  # 导入 requests 库
 app = Flask(__name__)
 CORS(app)  # 启用 CORS
 
-# 保留 OpenAI 的客户端用于聊天和语音识别
+# 从环境变量获取 OpenAI 的 API 令牌
 from openai import OpenAI
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-# 从环境变量获取新 TTS 厂商的 API 令牌
+# 从环境变量获取 TTS 厂商的 API 令牌
 API_TOKEN = os.environ.get("FISH_AUDIO_API_TOKEN")
 
 chat_history = [
@@ -39,8 +39,6 @@ def reset_session():
     new_user_message = False
     global chat_history
     chat_history = [{"role": "system", "content": "You are a helpful assistant."}]
-    # 重置任何其他需要的状态
-    # ...
     return jsonify(success=True, action="reset_session")
 
 
