@@ -95,17 +95,7 @@ npm start
 ```
 
 - **说明**: `reference_id` 表示音色 ID，可替换为您喜欢的音色。
-- **获取方法**: 前往 [FishAudio](https://fishaudio.com) 平台，浏览并选择不同的音色，获取对应的 `reference_id`。
-
----
-
-## 文件说明
-
-- `app.py`: Flask 后端，负责处理 API 请求和与 OpenAI/FishAudioTTS 的交互。
-- `index.html`: 项目主页，提供交互界面。
-- `frontend/`: 前端项目目录，包含 HTML、CSS 和 JS 文件。
-- `requirements.txt`: Python 项目的依赖文件。
-- `.env.example`: 环境变量模板文件。
+- **获取方法**: 前往 [FishAudio](https://fish.audio/) 平台，浏览并选择不同的音色，获取对应的 `reference_id`。
 
 ---
 
@@ -129,7 +119,7 @@ npm start
 
 ## 许可证
 
-MIT License. 详见 [LICENSE](./LICENSE) 文件。
+MIT License.
 
 ---
 
