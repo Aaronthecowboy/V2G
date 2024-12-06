@@ -48,8 +48,7 @@ source v2g-env/bin/activate  # 对于 Windows 用户：v2g-env\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. 配置 API 密钥
-在项目根目录创建一个 `.env` 文件：
+### 4. 配置 API 密钥，通过操作系统配置环境变量
 ```plaintext
 OPENAI_API_KEY=your_openai_api_key
 FISH_API_KEY=your_fish_audio_tts_key
