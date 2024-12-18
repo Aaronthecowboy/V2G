@@ -1,4 +1,3 @@
-collections
 json
 flask_cors
 glob
