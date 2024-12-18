@@ -1,9 +1,5 @@
-json
-flask_cors
-glob
-werkzeug
-openai
-requests
-time
-os
-Flask
+Flask>=2.0.0
+Flask-Cors>=3.0.0
+Werkzeug>=2.0.0
+requests>=2.25.0
+openai>=0.27.0
